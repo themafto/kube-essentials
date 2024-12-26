@@ -1,2 +1,23 @@
-# apiVersion: apps/v1
-# kind: Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend # deployment will be manage(create, upgrade, delete) pods with labels created in TEMPLATES
+  template:
+    metadata:
+      labels:
+        app: backend  # label for pods to find it
+    spec:
+      containers:
+        - name: backend
+          image: backend:0.7.1
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: backend-secrets
