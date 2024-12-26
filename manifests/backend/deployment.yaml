@@ -13,6 +13,19 @@ spec:
       labels:
         app: backend  # label for pods to find it
     spec:
+      initContainers:
+        - name: wait-for-postgresql
+          image: cgr.dev/chainguard/wait-for-it:latest
+          args:
+            - postgres-postgresql.postgres:5432  # We have to provide HOST name and a PORT for our image
+            - --timeout=20
+        - name: migrations-for-postgresql
+          image: backend:0.7.1
+          command: [ "/bin/sh", "-c" ]
+          args: [ "python app/backend_pre_start.py && alembic upgrade head && python app/initial_data.py" ]
+          envFrom:
+            - secretRef:
+                name: backend-secrets
       containers:
         - name: backend
           image: backend:0.7.1
