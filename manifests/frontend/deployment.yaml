@@ -1,2 +1,26 @@
-# apiVersion: apps/v1
-# kind: Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend # deployment will be manage(create, upgrade, delete) pods with labels created in TEMPLATES
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: frontend:0.7.1
+          ports:
+            - containerPort: 80
+      tolerations:
+        - key: "frontend"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+

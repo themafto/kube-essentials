@@ -22,12 +22,18 @@ nodes:
     kind: JoinConfiguration
     nodeRegistration:
       name: node-basic
+    taints:
+          - key: frontend
+            effect: NoSchedule
 - role: worker
   kubeadmConfigPatches:
   - |
     kind: JoinConfiguration
     nodeRegistration:
       name: node-fast
+    taints:
+          - key: backend
+            effect: NoSchedule
 - role: worker
   kubeadmConfigPatches:
   - |
