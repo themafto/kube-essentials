@@ -18,6 +18,25 @@ spec:
           image: frontend:0.7.1
           ports:
             - containerPort: 80
+          resources:
+            requests:
+              cpu: "75m"
+              memory: "128Mi"
+            limits:
+              cpu: "150m"
+              memory: "256Mi"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 7
+            periodSeconds: 10
       tolerations:
         - key: "frontend"
           operator: "Equal"
