@@ -34,3 +34,8 @@ spec:
           envFrom:
             - secretRef:
                 name: backend-secrets
+      tolerations:
+        - key: "backend"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
