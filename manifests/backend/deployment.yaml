@@ -51,8 +51,8 @@ spec:
             httpGet:
               path: /api/v1/utils/health-check/
               port: 8000
-            initialDelaySeconds: 7
-            periodSeconds: 10
+            initialDelaySeconds: 15
+            periodSeconds: 20
       tolerations:
         - key: "backend"
           operator: "Equal"
